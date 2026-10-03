@@ -1,0 +1,22 @@
+name: Keep Supabase awake
+
+on:
+  schedule:
+    # Every 3 days (06:17 UTC on days 1, 4, 7 ... of the month). Supabase pauses free
+    # projects after 7 days without activity, so this stays well inside the limit.
+    - cron: "17 6 */3 * *"
+  workflow_dispatch: # lets you run it by hand from the Actions tab
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read one row from the database
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          curl --fail --silent --show-error --retry 3 \
+            "$SUPABASE_URL/rest/v1/menus?select=id&limit=1" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY"

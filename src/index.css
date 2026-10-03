@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+/* One variant per theme: use them as garden:..., night:..., sun:..., plum:... */
+@custom-variant garden (&:where([data-t="garden"], [data-t="garden"] *));
+@custom-variant night (&:where([data-t="night"], [data-t="night"] *));
+@custom-variant sun (&:where([data-t="sun"], [data-t="sun"] *));
+@custom-variant plum (&:where([data-t="plum"], [data-t="plum"] *));
+
+/* Expose the theme variables as Tailwind colors/fonts: bg-bg, text-ink, border-line, font-theme... */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-ink: var(--ink);
+  --color-mute: var(--mute);
+  --color-acc: var(--acc);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --font-theme: var(--f);
+}
+
+/* Theme palettes. To add a fifth theme: one block here, one variant above, one entry in THEMES. */
+[data-t="garden"] { --bg:#EEF6F0; --ink:#16382B; --mute:#5B7A6B; --acc:#1F6B4A; --card:transparent; --line:#9DBFAE; --f:'Cairo',sans-serif; }
+[data-t="night"]  { --bg:#0D1428; --ink:#EAF0FF; --mute:#8E9BC0; --acc:#4FE0C1; --card:#16203D;     --line:#24305A; --f:'Cairo',sans-serif; }
+[data-t="sun"]    { --bg:#FFD43B; --ink:#1A1A1A; --mute:#4A4220; --acc:#1A1A1A; --card:#FFF3B8;     --line:#1A1A1A; --f:'Cairo',sans-serif; }
+[data-t="plum"]   { --bg:#F1ECFA; --ink:#2E1F5E; --mute:#6D5F9C; --acc:#5A3FC0; --card:#ffffff;     --line:#C9BEEA; --f:'Amiri',serif; }
